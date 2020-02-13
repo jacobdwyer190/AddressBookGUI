@@ -62,7 +62,7 @@ void loadWidgets(tgui::Gui& gui) {
 	nameBox->setPosition(175, 0);
 
 	tgui::EditBox::Ptr numBox = tgui::EditBox::create();
-	numBox->setSize(100, 20); 
+	numBox->setSize(100, 20);
 	numBox->setPosition(175, 20);
 
 	tgui::EditBox::Ptr addBox = tgui::EditBox::create();
