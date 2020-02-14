@@ -14,7 +14,7 @@ public:
 
 	void AddEntry(std::string name, std::string phoneNumber, std::string address);
 	void SearchAddressBook(std::string name);
-	void RemoveAddressBook(std::string name);
-	void PrintAddressBook();
+	void RemoveEntry(std::string name);
+	std::string PrintAddressBook();
 };
 

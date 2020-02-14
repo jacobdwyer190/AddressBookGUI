@@ -8,14 +8,15 @@
  *Will also allow a user to save(export using serialization), load, and sort the list
  */
 
-void entryHandler(tgui::EditBox::Ptr nameBox, tgui::EditBox::Ptr numBox, tgui::EditBox::Ptr addBox);
-void editHandler(tgui::EditBox::Ptr nameEditBox);
-void removeHandler(tgui::EditBox::Ptr removeBox);
-void sortHandler();
-void savetHandler();
-void loadHandler();
+void updateListBox(tgui::Panel::Ptr listBox, AddressBook *uEntry);
+void entryHandler(tgui::EditBox::Ptr nameBox, tgui::EditBox::Ptr numBox, tgui::EditBox::Ptr addBox, AddressBook* uEntry, tgui::ListBox::Ptr listBox);
+//void editHandler(tgui::EditBox::Ptr nameEditBox);
+void removeHandler(tgui::EditBox::Ptr removeBox, AddressBook *uEntry);
+//void sortHandler();
+//void savetHandler();
+//void loadHandler();
 
-void loadWidgets(tgui::Gui& gui) {
+void loadWidgets(tgui::Gui& gui, AddressBook *uEntry) {
 	//create a label for the title of the window
 	//and sets position and size
 	tgui::Label::Ptr title = tgui::Label::create("Address Book");
@@ -23,9 +24,9 @@ void loadWidgets(tgui::Gui& gui) {
 	title->setPosition(375, 0);
 
 	//creates a chatbox for displaying the address book
-	tgui::ListBox::Ptr list = tgui::ListBox::create();
-	list->setSize(800, 600);
-	list->setPosition(100, 100);
+	tgui::ListBox::Ptr listBox = tgui::ListBox::create();
+	listBox->setSize(800, 600);
+	listBox->setPosition(100, 100);
 	
 	//tgui::Scrollbar::Ptr scroll = tgui::Scrollbar::create();
 
@@ -62,7 +63,7 @@ void loadWidgets(tgui::Gui& gui) {
 	nameBox->setPosition(175, 0);
 
 	tgui::EditBox::Ptr numBox = tgui::EditBox::create();
-	numBox->setSize(100, 20); 
+	numBox->setSize(100, 20);
 	numBox->setPosition(175, 20);
 
 	tgui::EditBox::Ptr addBox = tgui::EditBox::create();
@@ -83,7 +84,7 @@ void loadWidgets(tgui::Gui& gui) {
 	entryPanel->add(addEntry);
 
 	//connect the buttons to their handlers
-	addEntry->connect("pressed", entryHandler, nameBox, numBox, addBox);
+	addEntry->connect("pressed", entryHandler, nameBox, numBox, addBox, uEntry, listBox);
 
 	/*-----editEntry panel widgets-----*/
 	tgui::Label::Ptr nameEdit = tgui::Label::create("Name:");
@@ -115,7 +116,7 @@ void loadWidgets(tgui::Gui& gui) {
 	removeEntry->setPosition(35, 70);
 
 	//connect the buttons to their handlers
-	//removeEntry->connect("pressed", removeHandler, nameBox);
+	removeEntry->connect("pressed", removeHandler, nameBox, uEntry);
 
 	//add all widgets to the panel
 	removePanel->add(nameRemove);
@@ -147,6 +148,7 @@ void loadWidgets(tgui::Gui& gui) {
 	sortPanel->add(sort);
 
 	/*----- Creates remaining widgets for the window -----*/
+
 	tgui::Button::Ptr load = tgui::Button::create("Load");
 	load->setSize(100, 20);
 	load->setPosition(435, 945);
@@ -157,7 +159,7 @@ void loadWidgets(tgui::Gui& gui) {
 
 	//add all panels and widgets to the window
 	gui.add(title);
-	gui.add(list);
+	gui.add(listBox);
 	gui.add(entryPanel);
 	gui.add(editPanel);
 	gui.add(removePanel);
@@ -178,7 +180,7 @@ int main() {
 	
 	try
 	{
-		loadWidgets(gui);
+		loadWidgets(gui, uEntry);
 	}
 	catch (const tgui::Exception & e)
 	{
@@ -207,13 +209,20 @@ int main() {
 	return EXIT_SUCCESS;
 }
 
+void updateListBox(tgui::ListBox::Ptr listBox, AddressBook* uEntry) {
+	listBox->addItem(uEntry->PrintAddressBook());
+} 
 
-void entryHandler(tgui::EditBox::Ptr nameBox, tgui::EditBox::Ptr numBox, tgui::EditBox::Ptr addBox)
-{
-		//uEntry->AddEntry(nameBox->getText(), numBox->getText(), addBox->getText());
+void entryHandler(tgui::EditBox::Ptr nameBox, tgui::EditBox::Ptr numBox, tgui::EditBox::Ptr addBox, AddressBook *uEntry, tgui::ListBox::Ptr listBox){
+		uEntry->AddEntry(nameBox->getText(), numBox->getText(), addBox->getText());
+		updateListBox(listBox, uEntry);
+		nameBox->setText("");
+		numBox->setText("");
+		addBox->setText("");
 		//uEntry->PrintAddressBook(); //for testing purposes
 }
 
-//void removeHandler(tgui::EditBox::Ptr nameBox) {
-//		uEntry->RemoveAddressBook(nameBox->getText());
-//}
+void removeHandler(tgui::EditBox::Ptr nameBox, AddressBook *uEntry) {
+		uEntry->RemoveEntry(nameBox->getText());
+		uEntry->PrintAddressBook(); //for testing purposes
+}
