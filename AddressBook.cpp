@@ -27,7 +27,7 @@ void AddressBook::SearchAddressBook(std::string name)
 	}
 }
 
-void AddressBook::RemoveAddressBook(std::string name)
+void AddressBook::RemoveEntry(std::string name)
 {
 	for (std::list<Entry*>::iterator currentEntry = this->entries.begin(); currentEntry != this->entries.end(); ++currentEntry) {
 		if ((*currentEntry)->GetName().compare(name) == 0) {
@@ -42,6 +42,5 @@ void AddressBook::PrintAddressBook()
 		std::cout << (*currentEntry)->ToString() << std::endl << "\n";
 		std::string str;
 		str = (*currentEntry)->ToString();
-		//return str;
 	}
 }
