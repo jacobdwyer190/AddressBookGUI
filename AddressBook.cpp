@@ -36,11 +36,11 @@ void AddressBook::RemoveEntry(std::string name)
 	}
 }
 
-void AddressBook::PrintAddressBook()
+std::string AddressBook::PrintAddressBook()
 {
 	for (std::list<Entry*>::iterator currentEntry = this->entries.begin(); currentEntry != this->entries.end(); ++currentEntry) {
 		std::cout << (*currentEntry)->ToString() << std::endl << "\n";
-		std::string str;
-		str = (*currentEntry)->ToString();
+		std::string str = (*currentEntry)->ToString();
+		return str;
 	}
 }

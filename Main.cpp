@@ -8,8 +8,8 @@
  *Will also allow a user to save(export using serialization), load, and sort the list
  */
 
-//void newEntryHandler(tgui::Panel::Ptr entryPanel);
-void entryHandler(tgui::EditBox::Ptr nameBox, tgui::EditBox::Ptr numBox, tgui::EditBox::Ptr addBox, AddressBook* uEntry);
+void updateListBox(tgui::Panel::Ptr listBox, AddressBook *uEntry);
+void entryHandler(tgui::EditBox::Ptr nameBox, tgui::EditBox::Ptr numBox, tgui::EditBox::Ptr addBox, AddressBook* uEntry, tgui::ListBox::Ptr listBox);
 //void editHandler(tgui::EditBox::Ptr nameEditBox);
 void removeHandler(tgui::EditBox::Ptr removeBox, AddressBook *uEntry);
 //void sortHandler();
@@ -84,7 +84,7 @@ void loadWidgets(tgui::Gui& gui, AddressBook *uEntry) {
 	entryPanel->add(addEntry);
 
 	//connect the buttons to their handlers
-	addEntry->connect("pressed", entryHandler, nameBox, numBox, addBox, uEntry);
+	addEntry->connect("pressed", entryHandler, nameBox, numBox, addBox, uEntry, listBox);
 
 	/*-----editEntry panel widgets-----*/
 	tgui::Label::Ptr nameEdit = tgui::Label::create("Name:");
@@ -209,18 +209,14 @@ int main() {
 	return EXIT_SUCCESS;
 }
 
-//void newEntryHandler(tgui::Panel::Ptr entryPanel)
-//{
-//	entryPanel->setPosition(500, 500);
-//	entryPanel->setSize(200, 200);
-//	entryPanel->setVisible(true);
-//}
+void updateListBox(tgui::ListBox::Ptr listBox, AddressBook* uEntry) {
+	listBox->addItem(uEntry->PrintAddressBook());
+} 
 
-void entryHandler(tgui::EditBox::Ptr nameBox, tgui::EditBox::Ptr numBox, tgui::EditBox::Ptr addBox, AddressBook *uEntry)
-{
+void entryHandler(tgui::EditBox::Ptr nameBox, tgui::EditBox::Ptr numBox, tgui::EditBox::Ptr addBox, AddressBook *uEntry, tgui::ListBox::Ptr listBox){
 		uEntry->AddEntry(nameBox->getText(), numBox->getText(), addBox->getText());
-		//std::string info = "hi";
-		//listView.addItem((*uEntry)->ToString());
+		//listBox->addItem(uEntry->PrintAddressBook());
+		updateListBox(listBox, uEntry);
 		uEntry->PrintAddressBook(); //for testing purposes
 }
 
