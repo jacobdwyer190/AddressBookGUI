@@ -215,8 +215,10 @@ void updateListBox(tgui::ListBox::Ptr listBox, AddressBook* uEntry) {
 
 void entryHandler(tgui::EditBox::Ptr nameBox, tgui::EditBox::Ptr numBox, tgui::EditBox::Ptr addBox, AddressBook *uEntry, tgui::ListBox::Ptr listBox){
 		uEntry->AddEntry(nameBox->getText(), numBox->getText(), addBox->getText());
-		//listBox->addItem(uEntry->PrintAddressBook());
 		updateListBox(listBox, uEntry);
+		nameBox->setText("");
+		numBox->setText("");
+		addBox->setText("");
 		uEntry->PrintAddressBook(); //for testing purposes
 }
 
