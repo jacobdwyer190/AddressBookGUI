@@ -219,7 +219,7 @@ void entryHandler(tgui::EditBox::Ptr nameBox, tgui::EditBox::Ptr numBox, tgui::E
 		nameBox->setText("");
 		numBox->setText("");
 		addBox->setText("");
-		uEntry->PrintAddressBook(); //for testing purposes
+		//uEntry->PrintAddressBook(); //for testing purposes
 }
 
 void removeHandler(tgui::EditBox::Ptr nameBox, AddressBook *uEntry) {
