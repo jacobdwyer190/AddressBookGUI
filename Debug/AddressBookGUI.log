@@ -1,5 +1,2 @@
-﻿  AddressBook.cpp
-  Main.cpp
-  Generating Code...
-C:\Users\Jacob\Dropbox\BSU\Spring 2020\Comp 340\Homework\Homework 1\AddressBookGui\AddressBookGUI\AddressBookGUI\AddressBook.cpp(46): warning C4715: 'AddressBook::PrintAddressBook': not all control paths return a value
+﻿  Main.cpp
   AddressBookGUI.vcxproj -> C:\Users\Jacob\Dropbox\BSU\Spring 2020\Comp 340\Homework\Homework 1\AddressBookGui\AddressBookGUI\Debug\AddressBookGUI.exe
